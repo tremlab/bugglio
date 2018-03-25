@@ -17,6 +17,7 @@ AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
 ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
 CALLER_ID = os.environ.get("TWILIO_CALLER_ID")
 TWILIO_APP_SID = os.environ.get("TWILIO_TWIML_APP_SID")
+ON_DUTY = os.environ.get("ON_DUTY")
 
 bugsnag.configure(
     api_key=os.environ.get("BUGSNAG_BUGGLIO_KEY"),
@@ -50,6 +51,15 @@ def process_notif():
     sms_msg = parse_bugsnag(data)
     # print("Bugsnag notification: {}".format(data))
     print(sms_msg)
+
+            client = Client(ACCOUNT_SID, AUTH_TOKEN)
+            message = client.messages.create(
+                to=ON_DUTY,
+                from_=CALLER_ID,
+                body=sms_msg,
+                # media_url="https://climacons.herokuapp.com/clear.png",
+            )
+
     return "OK"
 
     # else:
@@ -61,7 +71,7 @@ def parse_bugsnag(data):
     notif_type = data['trigger']['type']
     message = data['trigger']['message']
     project = data['project']['name']
-    sms_msg = message + project
+    sms_msg = message, project
 
         # // The type of trigger sent (always present)
         # // - "firstException"         A new error is created from a new exception
@@ -94,21 +104,6 @@ def sms_reply():
     # </Response>
     # """"
 
-
-# @app.route("/message", methods=['POST'])
-# def ask_for_msg():
-#     phone_raw = request.form.get("mobile")
-#
-#     mobile = twilio_functions.eval_phone(phone_raw)
-#
-#     buffy_txt = twilio_functions.send_sms(mobile)
-#
-#     twitter_functions.tweet_text(buffy_txt)
-#
-#     confirm_string = """Marzipan! '%s' was texted to %s
-#     """ % (buffy_txt, mobile)
-#
-#     return render_template("confirm_sms.html", confirm_string=confirm_string)
 
 
 if __name__ == "__main__":
