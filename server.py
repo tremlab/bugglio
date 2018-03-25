@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, redirect, request, Response, flash, session
+from flask import Flask, jsonify, render_template, redirect, request, abort, Response, flash, session
 import sys
 import os
 import json
@@ -23,6 +23,16 @@ bugsnag.configure(
     project_root="/",
 )
 
+# @app.before_request
+# def limit_remote_addr():
+#     if request.remote_addr != '10.20.30.40':
+#         abort(403)  # Forbidden
+
+# @app.route('/my_service', methods=['GET', 'OPTIONS'])
+# @crossdomain(origin='*')
+# def my_service():
+#     return jsonify(foo='cross domain ftw')
+
 @app.route("/", methods=['GET', 'POST'])
 def homepage():
     """display homepage.
@@ -34,10 +44,13 @@ def homepage():
 def process_notif():
     """this route responds to notifications from the Bugsnag webhook.
     """
-    data = json.loads(request.header)
-    print("Bugsnag notification: {}".format(data))
-    return "OK"
-
+    # this app route should only accept requests from Bugsnag's IP addresses
+    if request.remote_addr in ['104.196.245.109', '104.196.254.247']:
+        data = json.loads(request.data)
+        print("Bugsnag notification: {}".format(data))
+        return "OK"
+    else:
+         abort(403)  # Forbidden
 
 
 @app.route("/sms", methods=['GET', 'POST'])
