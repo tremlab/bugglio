@@ -18,7 +18,7 @@ CALLER_ID = os.environ.get("TWILIO_CALLER_ID")
 TWILIO_APP_SID = os.environ.get("TWILIO_TWIML_APP_SID")
 
 bugsnag.configure(
-    api_key=os.environ.get("BUGSNAG_KEY"),
+    api_key=os.environ.get("BUGSNAG_BUGGLIO_KEY"),
     project_root="/",
 )
 
