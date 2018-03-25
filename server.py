@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template, redirect, request, Response, flash, session
 import sys
 import os
+import json
 from twilio import twiml
 from twilio.twiml.messaging_response import MessagingResponse
 import bugsnag
@@ -30,11 +31,13 @@ def homepage():
     return render_template("index.html")
 
 @app.route("/bugsnag", methods=['GET', 'POST'])
-def process_notif(payload):
+def process_notif():
     """this route responds to notifications from the Bugsnag webhook.
     """
-    print(payload)
-    return
+    data = json.loads(request.data)
+    print "Bugsmnag notification: {}".format(data)
+    return "OK"
+
 
 
 @app.route("/sms", methods=['GET', 'POST'])
