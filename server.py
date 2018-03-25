@@ -58,7 +58,7 @@ def process_notif():
         to=ON_DUTY,
         from_=CALLER_ID,
         body=sms_msg,
-        media_url="https://bugllio.herokuapp.com/statis/images/dot.png",
+        # media_url="https://bugllio.herokuapp.com/statis/images/dot.png",
     )
 
     return "OK"
@@ -75,7 +75,7 @@ def parse_bugsnag(data):
     sms_msg = message + " on " + project
 
     if notif_type == 'exception':
-        sms_msg = sms_msg + " details: " + data['error']['exceptionClass'] + data['error']['message']
+        sms_msg = sms_msg + " details: " + data['error']['exceptionClass'] + " " + data['error']['message']
 
         # // The type of trigger sent (always present)
         # // - "firstException"         A new error is created from a new exception
