@@ -52,13 +52,13 @@ def process_notif():
     # print("Bugsnag notification: {}".format(data))
     print(sms_msg)
 
-            client = Client(ACCOUNT_SID, AUTH_TOKEN)
-            message = client.messages.create(
-                to=ON_DUTY,
-                from_=CALLER_ID,
-                body=sms_msg,
-                # media_url="https://climacons.herokuapp.com/clear.png",
-            )
+    client = Client(ACCOUNT_SID, AUTH_TOKEN)
+    message = client.messages.create(
+        to=ON_DUTY,
+        from_=CALLER_ID,
+        body=sms_msg,
+        # media_url="https://climacons.herokuapp.com/clear.png",
+    )
 
     return "OK"
 
