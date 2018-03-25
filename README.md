@@ -1,4 +1,4 @@
-#bugglio
+# bugglio
 
 This is a very simple Python3/flask server that, when deployed, can receive JSON notifications from a Bugsnag project's webhook, and then forward some basic details to an on-duty engineer in an sms text message using Twilio's library.
 
@@ -46,7 +46,7 @@ More environment variables needed:
 * FLASK_SECRET_KEY - any string you'd like
 * ON_DUTY  - your real life cell number to receive sms notifications - formatted as +12125551234
 
-##Deploy
+## Deploy
 
 Once all your accounts and tokens are setup (honestly, that's the hardest part), just get your server running somewhere so the webhook has access to your /bugsnag url publicly.
 
@@ -55,7 +55,7 @@ pip install requirements.text
 python server.py
 ```
 
-##Try it out!
+## Try it out!
 
 An easy test to make sure your server is working well with Twilio is to text your Twilio number from any cell phone.  You should get a generic text response every time:
 
@@ -67,7 +67,7 @@ If that works, the real test is to trigger an error on the app itself that your 
 
 As long as the error satisfies the filters you set on your webhook, you should receive a text on your phone!  The current server will send very basic details, but you can easily customize that to show however many attributes from the [original JSON](https://docs.bugsnag.com/product/integrations/webhook/#json-payload) you would find helpful to receive in a text.
 
-##STILL TO DO:
+## STILL TO DO:
 
 * security - make sure only Bugsnag can hit the '/bugsnag' route
 * users - build a db for admin to login and add engineer's mobile numbers, and track the current status of your app.
