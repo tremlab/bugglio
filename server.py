@@ -74,7 +74,7 @@ def parse_bugsnag(data):
     project = data['project']['name']
     sms_msg = message + " on " + project
 
-    if notif_type == exception:
+    if notif_type == 'exception':
         sms_msg = sms_msg + " details: " + data['error']['exceptionClass'] + data['error']['message']
 
         # // The type of trigger sent (always present)
