@@ -34,7 +34,7 @@ def homepage():
 def process_notif():
     """this route responds to notifications from the Bugsnag webhook.
     """
-    data = json.loads(request.data)
+    data = json.loads(request.header)
     print("Bugsnag notification: {}".format(data))
     return "OK"
 
@@ -46,10 +46,9 @@ def sms_reply():
     """
     resp = MessagingResponse()
 
-    # buffy_text = markov.get_quote("buffy_speechify.txt")
-    buffy_text = "Everything's perfectly all right now. We're fine. We're all fine here, now, thank you. How are you?"
+    sms_msg = "Everything's perfectly all right now. We're fine. We're all fine here, now, thank you. How are you?"
 
-    resp.message(buffy_text)
+    resp.message(sms_msg)
 
     return str(resp)
 
