@@ -4,6 +4,7 @@ import os
 import json
 from twilio import twiml
 from twilio.twiml.messaging_response import MessagingResponse
+from twilio.rest import Client
 import bugsnag
 from bugsnag.flask import handle_exceptions
 import twilio_functions
