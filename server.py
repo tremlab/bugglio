@@ -58,7 +58,7 @@ def process_notif():
         to=ON_DUTY,
         from_=CALLER_ID,
         body=sms_msg,
-        # media_url="https://bugllio.herokuapp.com/statis/images/dot.png",
+        media_url="https://bugllio.herokuapp.com/static/images/dot.png",
     )
 
     return "OK"
