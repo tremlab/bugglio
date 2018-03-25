@@ -5,6 +5,7 @@ certifi==2018.1.18
 cffi==1.10.0
 click==6.7
 cryptography==1.8.1
+Django==2.0.1
 enum34==1.1.6
 Flask==0.12.2
 Flask-Markdown==0.3
