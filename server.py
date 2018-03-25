@@ -46,9 +46,10 @@ def process_notif():
     """
     # this app route should only accept requests from Bugsnag's IP addresses
     # if request.remote_addr in ['104.196.245.109', '104.196.254.247']:
-    data = json.loads(request)
-    print("Bugsnag notification: {}".format(data))
+    # data = json.loads(request.data)
+    # print("Bugsnag notification: {}".format(data))
     print(request.remote_addr)
+    print(request)
     return "OK"
     # else:
     #      abort(403)  # Forbidden
