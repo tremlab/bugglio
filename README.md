@@ -14,7 +14,11 @@ https://pathtoyourhostedapp.com/bugsnag
 
 (Of course, you can update this later if you need to sort out your hosting.)
 
+![](static/images/bugsnag-webhook-url.png "Bugsnag webhook config")
+
 And then you can choose what kind of notifications you would like Bugsnag to send as text. Lots of options and filters available!
+
+![](static/images/bugsnag-filters.png "Bugsnag webhook filters")
 
 Secondly, make a project in Bugsnag for this server itself! Add the api key for this python/flask project to your envirionment as
 
@@ -27,6 +31,8 @@ so you can monitor any errors on this project (these errors are NOT the ones tha
 For the Twilio phone number you are using on this project, go to Manage, and under sms, set the url where sms messages should be received as:
 
 https://pathtoyourhostedapp.com/sms
+
+![](static/images/twilio-sms-url.png "Twilio sms url")
 
 You will also need to collect various tokens to add to your environment to get Twilio working in your app:
 
