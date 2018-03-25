@@ -44,16 +44,35 @@ def homepage():
 def process_notif():
     """this route responds to notifications from the Bugsnag webhook.
     """
-    # this app route should only accept requests from Bugsnag's IP addresses
+    # this app route should only accept requests from Bugsnag's IP addresses??
     # if request.remote_addr in ['104.196.245.109', '104.196.254.247']:
-    # data = json.loads(request.data)
+    data = json.loads(request.data)
+    sms_msg = parse_bugsnag(data)
     # print("Bugsnag notification: {}".format(data))
-    print(request.remote_addr)
-    print(request)
+    print(sms_msg)
     return "OK"
+
     # else:
     #      abort(403)  # Forbidden
 
+def parse_bugsnag(data):
+    """accepts a dictionary of data from the JSON payload from Bugsnag's notification.
+    """
+    notif_type = data['trigger']['type']
+    message = data['trigger']['message']
+    project = data['project']['name']
+    sms_msg = message + project
+
+        # // The type of trigger sent (always present)
+        # // - "firstException"         A new error is created from a new exception
+        # // - "powerTen"               An error occurs frequently
+        # // - "exception"              Every time an exception is received
+        # // - "reopened"               An error is automatically reopened
+        # // - "projectSpiking"         A spike in exception in a project has been detected
+        # // - "comment"                A comment is added to an error
+        # // - "errorStateManualChange" A user has manually changed the state of an error
+
+    return sms_msg
 
 @app.route("/sms", methods=['GET', 'POST'])
 def sms_reply():
