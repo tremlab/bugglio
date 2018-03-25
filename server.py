@@ -35,7 +35,7 @@ def process_notif():
     """this route responds to notifications from the Bugsnag webhook.
     """
     data = json.loads(request.data)
-    print "Bugsmnag notification: {}".format(data)
+    print("Bugsnag notification: {}".format(data))
     return "OK"
 
 
