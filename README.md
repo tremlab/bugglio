@@ -51,7 +51,7 @@ More environment variables needed:
 Once all your accounts and tokens are setup (honestly, that's the hardest part), just get your server running somewhere so the webhook has access to your /bugsnag url publicly.
 
 ```
-pip install requirements.text
+pip install -r requirements.text
 python server.py
 ```
 
