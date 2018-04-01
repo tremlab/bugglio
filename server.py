@@ -25,15 +25,6 @@ bugsnag.configure(
     project_root="/",
 )
 
-# @app.before_request
-# def limit_remote_addr():
-#     if request.remote_addr != '10.20.30.40':
-#         abort(403)  # Forbidden
-
-# @app.route('/my_service', methods=['GET', 'OPTIONS'])
-# @crossdomain(origin='*')
-# def my_service():
-#     return jsonify(foo='cross domain ftw')
 
 @app.route("/", methods=['GET', 'POST'])
 def homepage():
@@ -42,35 +33,41 @@ def homepage():
     # build homepage, fomr to submit phone #
     return render_template("index.html")
 
+
 @app.route("/bugsnag", methods=['GET', 'POST'])
 def process_notif():
     """this route responds to notifications from the Bugsnag webhook.
     """
-    # this app route should only accept requests from Bugsnag's IP addresses??
-    # if request.remote_addr in ['104.196.245.109', '104.196.254.247']:
-    data = json.loads(request.data)
-    sms_msg = parse_bugsnag(data)
-    # print("Bugsnag notification: {}".format(data))
-    print(sms_msg)
+    # this app route should only accept requests from Bugsnag's IP addresses
+    if request.X-Forwarded-For in ['104.196.245.109', '104.196.254.247']:
+        data = json.loads(request.data)
+        sms_msg = parse_bugsnag(data)
 
-    client = Client(ACCOUNT_SID, AUTH_TOKEN)
-    message = client.messages.create(
-        to=ON_DUTY,
-        from_=CALLER_ID,
-        body=sms_msg,
-    )
+        client = Client(ACCOUNT_SID, AUTH_TOKEN)
+        message = client.messages.create(
+            to=ON_DUTY,
+            from_=CALLER_ID,
+            body=sms_msg,
+        )
 
-    return "OK"
+        return "OK"
 
-    # else:
-    #      abort(403)  # Forbidden
+    else:
+         abort(403)  # Forbidden
+
 
 def parse_bugsnag(data):
     """accepts a dictionary of data from the JSON payload from Bugsnag's notification.
     """
-    notif_type = data['trigger']['type']
-    message = data['trigger']['message']
-    project = data['project']['name']
+    # catch if not formatted right
+    try:
+        notif_type = data['trigger']['type']
+        message = data['trigger']['message']
+        project = data['project']['name']
+    except Exception as e:
+        bugsnag.notify(e)
+        return "Couldn't parse notification data :( Check app.bugsnag.com"
+
     sms_msg = message + " on " + project
 
     if notif_type == 'exception':
@@ -86,6 +83,7 @@ def parse_bugsnag(data):
         # // - "errorStateManualChange" A user has manually changed the state of an error
 
     return sms_msg
+
 
 @app.route("/sms", methods=['GET', 'POST'])
 def sms_reply():
