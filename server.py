@@ -38,8 +38,10 @@ def process_notif():
     """this route responds to notifications from the Bugsnag webhook.
     """
     # this app route should only accept requests from Bugsnag's IP addresses
-    print(request.X-Forwarded-For)
-    if request.X-Forwarded-For in ['104.196.245.109', '104.196.254.247']:
+    headers_list = request.headers.getlist("X-Forwarded-For")
+    request_ip = headers_list[0] if headers_list else request.remote_addr
+    print(request_ip)
+    if request_ip in ['104.196.245.109', '104.196.254.247']:
         data = json.loads(request.data)
         sms_msg = parse_bugsnag(data)
 
