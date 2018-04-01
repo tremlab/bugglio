@@ -69,7 +69,6 @@ As long as the error satisfies the filters you set on your webhook, you should r
 
 ## STILL TO DO:
 
-* security - make sure only Bugsnag can hit the '/bugsnag' route
 * users - build a db for admin to login and add engineer's mobile numbers, and track the current status of your app.
 * shifts - send text to the correct engineer's mobile based on timestamp & shift schedule.
 * response - allow engineers to check open notifications for the project, and snooze/close specific notifications via text.
