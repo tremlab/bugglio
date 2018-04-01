@@ -7,7 +7,6 @@ from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
 import bugsnag
 from bugsnag.flask import handle_exceptions
-import twilio_functions
 
 app = Flask(__name__)
 handle_exceptions(app) # bugsnag config
