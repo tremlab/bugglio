@@ -30,8 +30,10 @@ CALLER_ID = os.environ.get("TWILIO_CALLER_ID")
 TWILIO_APP_SID = os.environ.get("TWILIO_TWIML_APP_SID")
 ON_DUTY = os.environ.get("ON_DUTY")
 
-cors = CORS(app)
-app.config['Access-Control-Allow-Origin'] = '*'
+
+# In the simplest case, initialize the Flask-Cors extension with default arguments in order to allow CORS for all domains on all routes.
+CORS(app)
+# app.config['Access-Control-Allow-Origin'] = '*'
 
 @app.route("/", methods=['GET', 'POST'])
 def homepage():
