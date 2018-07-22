@@ -68,7 +68,7 @@ def parse_bugsnag(data):
         project = data['project']['name']
     except Exception as e:
         bugsnag.notify(e)
-        return "Couldn't parse notification data :( Check app.bugsnag.com"
+        return "Couldn't parse notification data. Check app.bugsnag.com"
 
     sms_msg = message + " on " + project
 
