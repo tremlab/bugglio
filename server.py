@@ -1,9 +1,9 @@
 from flask import Flask, jsonify, render_template, redirect, request, abort, Response, flash, session
-from flask_sqlalchemy import SQLAlchemy
+# from flask_sqlalchemy import SQLAlchemy
 import sys
 import os
 # from model import ()
-from sqlalchemy.orm.exc import NoResultFound
+# from sqlalchemy.orm.exc import NoResultFound
 import json
 from twilio import twiml
 from twilio.twiml.messaging_response import MessagingResponse
@@ -121,6 +121,6 @@ def sms_reply():
 
 if __name__ == "__main__":
     DEBUG = "NO_DEBUG" not in os.environ
-    connect_to_db(app, os.environ.get("DATABASE_URL"))
+    # connect_to_db(app, os.environ.get("DATABASE_URL"))
     PORT = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=PORT)
