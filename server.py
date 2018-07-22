@@ -103,7 +103,7 @@ def sms_reply():
     """
     resp = MessagingResponse()
 
-    sms_msg = "Everything's perfectly all right now. We're fine. We're all fine here, now, thank you. How are you?"
+    sms_msg = "Everything's perfectly all right now. We're fine. We're all fine here, now, thank you. How are you? --bugglio.herokuapp.com"
 
     resp.message(sms_msg)
 
