@@ -1,17 +1,28 @@
 from flask import Flask, jsonify, render_template, redirect, request, abort, Response, flash, session
+from flask_sqlalchemy import SQLAlchemy
 import sys
-import os
+# from model import ()
+from sqlalchemy.orm.exc import NoResultFound
 import json
 from twilio import twiml
 from twilio.twiml.messaging_response import MessagingResponse
 from twilio.rest import Client
+from flask_cors import CORS, cross_origin
 import bugsnag
 from bugsnag.flask import handle_exceptions
+import psycopg2
+
 
 app = Flask(__name__)
 handle_exceptions(app) # bugsnag config
 app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY", "s0Then!stO0dth34ean9a11iw4n7edto9ow4s8ur$7!ntOfL*me5")
-# app.jinja_env.endefined = StrictUndefined
+db = SQLAlchemy(app)
+# conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+bugsnag.configure(
+    api_key=os.environ.get("BUGSNAG_BUGGLIO_KEY"),
+    project_root="/",
+)
 
 AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
 ACCOUNT_SID = os.environ.get("TWILIO_ACCOUNT_SID")
@@ -19,11 +30,10 @@ CALLER_ID = os.environ.get("TWILIO_CALLER_ID")
 TWILIO_APP_SID = os.environ.get("TWILIO_TWIML_APP_SID")
 ON_DUTY = os.environ.get("ON_DUTY")
 
-bugsnag.configure(
-    api_key=os.environ.get("BUGSNAG_BUGGLIO_KEY"),
-    project_root="/",
-)
 
+# In the simplest case, initialize the Flask-Cors extension with default arguments in order to allow CORS for all domains on all routes.
+CORS(app)
+# app.config['Access-Control-Allow-Origin'] = '*'
 
 @app.route("/", methods=['GET', 'POST'])
 def homepage():
@@ -110,7 +120,7 @@ def sms_reply():
 
 
 if __name__ == "__main__":
-    bugsnag.notify(Exception("Test Error"))
     DEBUG = "NO_DEBUG" not in os.environ
+    connect_to_db(app, os.environ.get("DATABASE_URL"))
     PORT = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=PORT)
