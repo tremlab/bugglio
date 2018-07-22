@@ -21,7 +21,7 @@ bugsnag.configure(
 app = Flask(__name__)
 handle_exceptions(app) # bugsnag config
 app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET_KEY", "s0Then!stO0dth34ean9a11iw4n7edto9ow4s8ur$7!ntOfL*me5")
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 # conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 AUTH_TOKEN = os.environ.get("TWILIO_AUTH_TOKEN")
